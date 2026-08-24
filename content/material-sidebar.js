@@ -65,8 +65,8 @@
 
   function build() {
     host = document.createElement("div");
-    host.id = HOST_ID;
-    shadow = host.attachShadow({ mode: "open" });
+    host.id = `${HOST_ID}-${Math.random().toString(36).slice(2, 10)}`;
+    shadow = host.attachShadow({ mode: "closed" });
     const style = document.createElement("style"); style.textContent = CSS; shadow.appendChild(style);
     const wrap = document.createElement("div"); wrap.className = "wrap";
     panelRoot = wrap;
