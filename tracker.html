@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>投递工作台</title>
+  <link rel="stylesheet" href="manager.css">
+  <link rel="stylesheet" href="tracker.css">
+</head>
+<body class="tracker-page">
+  <header id="topbar">
+    <a class="brand" href="manager.html" aria-label="履历档案库首页"><span class="brand-mark">履</span><span>履历档案库</span></a>
+    <nav class="primary-nav" aria-label="主导航">
+      <a class="nav-link" id="archive-link" href="manager.html">档案库</a>
+      <a class="nav-link active" href="tracker.html" aria-current="page">投递工作台</a>
+    </nav>
+    <div class="toolbar">
+      <select id="profile-select" title="选择档案"></select>
+      <span class="spacer"></span>
+      <button id="add-application-btn" type="button">新增投递</button>
+      <button id="add-progress-btn" type="button">新增计划</button>
+      <button id="save-btn" type="button" class="primary">保存更改</button>
+    </div>
+  </header>
+
+  <div id="status-line" aria-live="polite"></div>
+
+  <main id="tracker-main">
+    <section class="page-hero tracker-hero">
+      <div>
+        <p class="eyebrow">APPLICATION WORKSPACE</p>
+        <h1>把投递节奏放到一张工作台</h1>
+        <p>记录每份申请、下一步动作与状态变更；按计划推进，而不是在表格里迷失。</p>
+      </div>
+      <a id="hero-archive-link" class="hero-link" href="manager.html">维护档案与材料 <span aria-hidden="true">→</span></a>
+    </section>
+
+    <section class="summary-grid" aria-label="投递概览">
+      <article class="summary-card"><span class="summary-label">全部投递</span><strong id="summary-total">0</strong><small>当前档案中的申请记录</small></article>
+      <article class="summary-card accent"><span class="summary-label">推进中</span><strong id="summary-active">0</strong><small>笔试、面试或其他流程中</small></article>
+      <article class="summary-card warm"><span class="summary-label">待行动</span><strong id="summary-next">0</strong><small>未来 7 天有下一步安排</small></article>
+      <article class="summary-card muted"><span class="summary-label">计划完成</span><strong id="summary-done">0</strong><small>本档案已完成的计划事项</small></article>
+    </section>
+
+    <section class="workspace-section application-section">
+      <div class="section-heading">
+        <div><p class="section-kicker">APPLICATIONS</p><h2>投递记录</h2><p>每张卡片代表一份申请。状态历史会保留每次记录，不会覆盖过去的信息。</p></div>
+        <button id="section-add-application-btn" type="button" class="primary">新增投递</button>
+      </div>
+      <div class="tracker-filters">
+        <input id="application-search" type="search" placeholder="搜索公司、岗位、状态或网址">
+        <select id="application-stage-filter" aria-label="投递阶段筛选">
+          <option value="all">全部状态</option>
+          <option value="active">推进中</option>
+          <option value="submitted">已投递</option>
+          <option value="success">已录用</option>
+          <option value="closed">已结束</option>
+        </select>
+      </div>
+      <div id="application-list" class="application-grid"></div>
+    </section>
+
+    <section class="workspace-section plan-section">
+      <div class="section-heading">
+        <div><p class="section-kicker">ACTION PLAN</p><h2>求职行动计划</h2><p>将准备、推进、阻塞和完成事项分列管理。切换状态即可移动事项，不需要拖拽。</p></div>
+        <button id="section-add-progress-btn" type="button" class="primary">新增计划</button>
+      </div>
+      <div id="plan-board" class="plan-board"></div>
+    </section>
+  </main>
+
+  <footer><p class="hint">投递记录与计划仅保存在浏览器扩展本地存储中。插件不会代替你提交申请。</p></footer>
+
+  <script src="shared/schema.js"></script>
+  <script src="shared/field-aliases.js"></script>
+  <script src="shared/material-library.js"></script>
+  <script src="shared/seed-profile.js"></script>
+  <script src="shared/profile-store.js"></script>
+  <script src="tracker.js"></script>
+</body>
+</html>

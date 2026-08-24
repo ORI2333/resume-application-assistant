@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "履历投递助手",
+  "version": "4.2",
+  "description": "本地履历材料库与投递工作台：手动复制、跟踪申请，不自动提交",
+  "permissions": ["storage", "activeTab", "scripting"],
+  "background": { "service_worker": "background.js" },
+  "action": {
+    "default_title": "打开履历材料库",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

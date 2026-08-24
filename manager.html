@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>履历档案库</title>
+  <link rel="stylesheet" href="manager.css">
+</head>
+<body>
+  <header id="topbar">
+    <a class="brand" href="manager.html" aria-label="履历档案库首页"><span class="brand-mark">履</span><span>履历档案库</span></a>
+    <nav class="primary-nav" aria-label="主导航">
+      <a class="nav-link active" href="manager.html" aria-current="page">档案库</a>
+      <a class="nav-link" id="tracker-link" href="tracker.html">投递工作台</a>
+    </nav>
+    <div class="toolbar">
+      <select id="profile-select" title="选择档案"></select>
+      <button id="new-profile-btn" type="button">新建档案</button>
+      <button id="delete-profile-btn" type="button" class="danger">删除档案</button>
+      <span class="spacer"></span>
+      <button id="template-btn" type="button">下载模板</button>
+      <button id="import-btn" type="button">导入 XLSX</button>
+      <input id="import-file" type="file" accept=".xlsx" hidden>
+      <button id="export-btn" type="button" class="primary">导出 XLSX</button>
+      <button id="save-btn" type="button" class="primary">保存</button>
+    </div>
+  </header>
+
+  <div id="status-line"></div>
+
+  <main>
+    <section class="page-hero">
+      <div><p class="eyebrow">LOCAL PROFILE LIBRARY</p><h1>整理你的求职档案</h1><p>档案、版本、材料与开放问题集中维护；投递节奏在独立工作台追踪。</p></div>
+      <a id="hero-tracker-link" class="hero-link" href="tracker.html">进入投递工作台 <span aria-hidden="true">→</span></a>
+    </section>
+    <section id="gate-banner" class="banner warning hidden"></section>
+    <section class="card" id="custom-fields-area">
+      <h2>自定义字段</h2>
+      <p class="hint">可自行增加、修改、查询和删除字段。字段 key 必须唯一；敏感字段默认不自动填写。</p>
+      <div class="fields-toolbar"><input id="custom-field-search" type="search" placeholder="搜索字段 key、名称或值"><button id="add-custom-field-btn" type="button" class="primary">新增字段</button></div>
+      <div id="custom-fields-list"></div>
+    </section>
+
+
+    <section id="review-section" class="card">
+      <h2>待核对项（<span id="review-count">0</span>）</h2>
+      <p class="hint">请确认导入、修改或待定的信息；完成核对后点击“已核对，忽略”。</p>
+      <ul id="review-list"></ul>
+    </section>
+
+    <section class="card">
+      <h2>基本信息</h2>
+      <table class="fields-table" id="personal-table">
+        <thead><tr><th>字段</th><th>显示名</th><th>值</th><th>别名（JSON 数组）</th><th>自动填写</th><th>不使用</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>敏感字段</h2>
+      <p class="hint">敏感字段以明文存储在浏览器本地（chrome.storage.local）。默认不参与自动填写；只有在此处开启“自动填写”后才会成为候选，且每次仍需你确认。</p>
+      <table class="fields-table" id="sensitive-table">
+        <thead><tr><th>字段</th><th>显示名</th><th>值</th><th>别名（JSON 数组）</th><th>自动填写</th><th>不使用</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>投递版本</h2>
+      <div id="variants-area"></div>
+    </section>
+
+    <section class="card" id="materials-area">
+      <h2>本地材料库（<span id="material-count">0</span>）</h2>
+      <p class="hint">这里是手动复制的唯一入口。不会扫描网页、不会自动填表、不会自动提交。敏感值默认遮罩，复制前需要确认；健康、诚信、利益冲突等声明只保留空白模板，请按实际情况填写。</p>
+      <div class="materials-toolbar">
+        <input id="material-search" type="search" placeholder="搜索材料名称、标签或内容">
+        <select id="material-category-filter" aria-label="材料分类"></select>
+        <button id="add-material-btn" type="button" class="primary">新增材料</button>
+      </div>
+      <div id="materials-list"></div>
+    </section>
+
+    <section class="card" id="records-area"></section>
+  </main>
+
+  <footer>
+    <p class="hint">数据仅保存在本机浏览器扩展存储中；导出文件含个人资料，请妥善保管。</p>
+  </footer>
+
+  <script src="vendor/xlsx.full.min.js"></script>
+  <script src="shared/schema.js"></script>
+  <script src="shared/field-aliases.js"></script>
+  <script src="shared/material-library.js"></script>
+  <script src="shared/seed-profile.js"></script>
+  <script src="shared/profile-store.js"></script>
+  <script src="shared/xlsx-workbook.js"></script>
+  <script src="manager.js"></script>
+</body>
+</html>
