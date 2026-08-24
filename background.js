@@ -55,6 +55,7 @@
 
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (!message || typeof message.type !== "string") return;
+    if (!sender || sender.id !== chrome.runtime.id) return;
     if (message.type === "resume-assistant/current-page-context") {
       chrome.storage.session.get(LAST_PAGE_KEY)
         .then((data) => sendResponse({ ok: true, context: data[LAST_PAGE_KEY] || null }))
@@ -81,8 +82,12 @@
     }
     /* 浏览器没有直接启动 Windows 资源管理器的通用 MV3 API。
      * 这里打开 file URL 目录；用户需在扩展详情中开启“允许访问文件网址”。 */
-    const filePath = path.replace(/\\/g, "/").replace(/^\/+/, "");
-    const fileUrl = "file:///" + filePath.split("/").map((part, index) => index === 0 ? part : encodeURIComponent(part)).join("/");
+    const segments = path.replace(/\\/g, "/").replace(/^\/+/, "").split("/").filter((part) => part && part !== ".");
+    if (segments.some((part) => part === "..")) {
+      sendResponse({ ok: false, error: "文件夹路径包含不允许的上级目录段（..）" });
+      return;
+    }
+    const fileUrl = "file:///" + segments.map((part, index) => index === 0 ? part : encodeURIComponent(part)).join("/");
     chrome.tabs.create({ url: fileUrl })
       .then(() => sendResponse({ ok: true }))
       .catch((error) => sendResponse({ ok: false, error: error.message || String(error) }));
