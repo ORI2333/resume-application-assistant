@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Resume Application Assistant",
-  "version": "4.3",
+  "version": "4.4",
   "description": "Local resume material library and application tracker. Manual copy only, never auto-submits.",
   "permissions": ["storage", "activeTab", "scripting"],
   "background": { "service_worker": "background.js" },
