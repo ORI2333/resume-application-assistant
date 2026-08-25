@@ -23,13 +23,42 @@ All application materials are stored locally in the browser (`chrome.storage.loc
 - 零网络请求、无统计打点、无远程代码、无第三方域名 / Zero network requests, no analytics, no remote code, no third-party domains
 - 敏感字段以明文存于本地存储（本机可读）；这是明确的设计取舍，请勿在共用电脑上使用 / Sensitive fields are stored in plaintext in local storage (readable on this machine) — a deliberate trade-off; do not use on shared computers
 - 侧栏使用封闭 Shadow DOM + 隔离世界注入，网页脚本无法读取面板内容 / The sidebar uses a closed Shadow DOM and isolated-world injection — page scripts cannot read the panel
-- 卸载扩展会删除全部数据；移动或重命名解压目录会改变扩展 ID（旧数据仍在旧 ID 目录）——请先导出 XLSX / Removing the extension deletes all data; moving or renaming the unpacked folder changes the extension ID (old data remains under the old ID) — export XLSX first
+- 卸载扩展会删除全部数据；移动或重命名扩展目录会改变扩展 ID（旧数据仍在旧 ID 目录）——请先导出 XLSX / Removing the extension deletes all data; moving or renaming the extension folder changes the extension ID (old data remains under the old ID) — export XLSX first
+
+## 目录布局 / Layout
+
+本地维护仓库与 GitHub 仓库采用同一结构：根目录放置说明文档，`source/` 为可加载的扩展源码，发行包位于 `release/` 目录（GitHub 上同时发布为 Releases 附件）。
+
+The local maintenance repository and the GitHub repository share the same layout: the root holds the documentation, `source/` is the loadable extension source, and release archives live under `release/` (also published as GitHub Releases assets).
+
+```text
+resume-application-assistant/
+├── README.md                    本说明文档 / this document
+├── source/                      扩展源码（chrome://extensions 加载此目录）/ extension source (load this folder)
+│   ├── manifest.json
+│   ├── background.js
+│   ├── content.js
+│   ├── content/material-sidebar.js
+│   ├── manager.html / .css / .js
+│   ├── tracker.html / .css / .js
+│   ├── shared/                  数据模型、存储、材料库、XLSX / schema, storage, materials, XLSX
+│   ├── vendor/xlsx.full.min.js  SheetJS 0.20.3（离线依赖）/ offline dependency
+│   └── icons/
+└── release/                     发行包（版本号命名）/ release archives (versioned)
+    └── resume-application-assistant-v4.4.zip
+```
 
 ## 安装 / Installation
 
-1. 下载仓库或解压发布包 `resume-application-assistant-release.zip` / Download the repository or extract `resume-application-assistant-release.zip`
-2. 打开 `chrome://extensions` 或 `edge://extensions`，开启"开发者模式" / Open `chrome://extensions` or `edge://extensions` and enable "Developer mode"
-3. 点击"加载已解压的扩展程序"，选择包含 `manifest.json` 的目录 / Click "Load unpacked" and select the directory containing `manifest.json`
+方式一：直接加载源码 / Option A — load the source
+
+1. 打开 `chrome://extensions` 或 `edge://extensions`，开启"开发者模式" / Open `chrome://extensions` or `edge://extensions` and enable "Developer mode"
+2. 点击"加载已解压的扩展程序"，选择 `source/` 目录 / Click "Load unpacked" and select the `source/` folder
+
+方式二：解压发行包 / Option B — extract the release archive
+
+1. 解压 `release/resume-application-assistant-vX.Y.zip` / Extract `release/resume-application-assistant-vX.Y.zip`
+2. 按方式一第 2 步加载解压出的目录 / Load the extracted folder as in Option A step 2
 
 ## 使用 / Usage
 
@@ -37,7 +66,7 @@ All application materials are stored locally in the browser (`chrome.storage.loc
 2. 侧栏底部"档案"按钮打开档案库，维护档案与材料 / The "Archive" button in the sidebar footer opens the archive manager
 3. "投递工作台"按钮打开投递与计划看板 / The "Tracker" button opens the application and plan board
 
-## 项目结构 / Structure
+## 源码结构 / Source Layout
 
 ```text
 manifest.json                扩展清单 / manifest
@@ -68,5 +97,5 @@ icons/                       图标 / icons
 
 ## 仓库约定 / Repository Notes
 
-- 仓库不含任何个人简历数据；含个人信息的 XLSX 与 ZIP 构建产物由 `.gitignore` 排除 / The repository contains no personal resume data; personal XLSX files and ZIP build artifacts are excluded via `.gitignore`
+- 仓库不含任何个人简历数据；含个人信息的 XLSX 与发行包 ZIP 由 `.gitignore` 排除，发行包以 GitHub Releases 附件形式发布 / The repository contains no personal resume data; personal XLSX files and release ZIPs are excluded via `.gitignore`, and release archives are published as GitHub Releases assets
 - 当前版本：4.4 / Current version: 4.4
